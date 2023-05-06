@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FluffNStuffModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="admintable">
+    <Key>
+      <PropertyRef Name="admin_id" />
+    </Key>
+    <Property Name="admin_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="admin_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="admin_password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="categories" Relationship="Self.FK__category__admin___0DAF0CB0" FromRole="admintables" ToRole="categories" />
+    <NavigationProperty Name="sub_category" Relationship="Self.FK__sub_categ__admin__24927208" FromRole="admintables" ToRole="sub_category" />
+  </EntityType>
+  <EntityType Name="category">
+    <Key>
+      <PropertyRef Name="cat_id" />
+    </Key>
+    <Property Name="cat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cat_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="cat_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="admin_id_fk" Type="Int32" />
+    <Property Name="cat_status" Type="Int32" />
+    <NavigationProperty Name="admintable" Relationship="Self.FK__category__admin___0DAF0CB0" FromRole="categories" ToRole="admintables" />
+    <NavigationProperty Name="sub_category" Relationship="Self.FK__sub_categ__cat_i__32E0915F" FromRole="categories" ToRole="sub_category" />
+  </EntityType>
+  <EntityType Name="invoicetable">
+    <Key>
+      <PropertyRef Name="in_id" />
+    </Key>
+    <Property Name="in_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="in_fk_subcat" Type="Int32" />
+    <Property Name="in_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="sub_category" Relationship="Self.FK__invoiceta__in_fk__37A5467C" FromRole="invoicetables" ToRole="sub_category" />
+    <NavigationProperty Name="ordertables" Relationship="Self.FK__ordertabl__o_fk___3E52440B" FromRole="invoicetables" ToRole="ordertables" />
+    <Property Name="in_totalbill" Type="Double" />
+  </EntityType>
+  <EntityType Name="ordertable">
+    <Key>
+      <PropertyRef Name="o_id" />
+    </Key>
+    <Property Name="o_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="o_fk_subcat" Type="Int32" />
+    <Property Name="o_fk_user" Type="Int32" />
+    <Property Name="o_fk_invoice" Type="Int32" />
+    <Property Name="o_date" Type="DateTime" Precision="3" />
+    <Property Name="o_qty" Type="Int32" />
+    <Property Name="o_bill" Type="Double" />
+    <Property Name="o_unitprice" Type="Int32" />
+    <NavigationProperty Name="invoicetable" Relationship="Self.FK__ordertabl__o_fk___3E52440B" FromRole="ordertables" ToRole="invoicetables" />
+    <NavigationProperty Name="sub_category" Relationship="Self.FK__ordertabl__o_fk___3C69FB99" FromRole="ordertables" ToRole="sub_category" />
+    <NavigationProperty Name="usertable" Relationship="Self.FK__ordertabl__o_fk___3D5E1FD2" FromRole="ordertables" ToRole="usertables" />
+  </EntityType>
+  <EntityType Name="sub_category">
+    <Key>
+      <PropertyRef Name="subcat_id" />
+    </Key>
+    <Property Name="subcat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="subcat_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="subcat_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="subcat_price" Type="Int32" />
+    <Property Name="subcat_desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="admin_id_fk" Type="Int32" />
+    <Property Name="subcat_user_id_fk" Type="Int32" />
+    <Property Name="cat_id_fk" Type="Int32" />
+    <NavigationProperty Name="admintable" Relationship="Self.FK__sub_categ__admin__24927208" FromRole="sub_category" ToRole="admintables" />
+    <NavigationProperty Name="category" Relationship="Self.FK__sub_categ__cat_i__32E0915F" FromRole="sub_category" ToRole="categories" />
+    <NavigationProperty Name="invoicetables" Relationship="Self.FK__invoiceta__in_fk__37A5467C" FromRole="sub_category" ToRole="invoicetables" />
+    <NavigationProperty Name="ordertables" Relationship="Self.FK__ordertabl__o_fk___3C69FB99" FromRole="sub_category" ToRole="ordertables" />
+    <NavigationProperty Name="usertable" Relationship="Self.FK__sub_categ__subca__25869641" FromRole="sub_category" ToRole="usertables" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="usertable">
+    <Key>
+      <PropertyRef Name="u_id" />
+    </Key>
+    <Property Name="u_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="u_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="u_password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="u_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="u_contact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="u_email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="ordertables" Relationship="Self.FK__ordertabl__o_fk___3D5E1FD2" FromRole="usertables" ToRole="ordertables" />
+    <NavigationProperty Name="sub_category" Relationship="Self.FK__sub_categ__subca__25869641" FromRole="usertables" ToRole="sub_category" />
+  </EntityType>
+  <Association Name="FK__category__admin___0DAF0CB0">
+    <End Role="admintables" Type="Self.admintable" Multiplicity="0..1" />
+    <End Role="categories" Type="Self.category" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="admintables">
+        <PropertyRef Name="admin_id" />
+      </Principal>
+      <Dependent Role="categories">
+        <PropertyRef Name="admin_id_fk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__sub_categ__admin__24927208">
+    <End Role="admintables" Type="Self.admintable" Multiplicity="0..1" />
+    <End Role="sub_category" Type="Self.sub_category" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="admintables">
+        <PropertyRef Name="admin_id" />
+      </Principal>
+      <Dependent Role="sub_category">
+        <PropertyRef Name="admin_id_fk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__sub_categ__cat_i__32E0915F">
+    <End Role="categories" Type="Self.category" Multiplicity="0..1" />
+    <End Role="sub_category" Type="Self.sub_category" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="categories">
+        <PropertyRef Name="cat_id" />
+      </Principal>
+      <Dependent Role="sub_category">
+        <PropertyRef Name="cat_id_fk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__invoiceta__in_fk__37A5467C">
+    <End Role="sub_category" Type="Self.sub_category" Multiplicity="0..1" />
+    <End Role="invoicetables" Type="Self.invoicetable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sub_category">
+        <PropertyRef Name="subcat_id" />
+      </Principal>
+      <Dependent Role="invoicetables">
+        <PropertyRef Name="in_fk_subcat" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ordertabl__o_fk___3E52440B">
+    <End Role="invoicetables" Type="Self.invoicetable" Multiplicity="0..1" />
+    <End Role="ordertables" Type="Self.ordertable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="invoicetables">
+        <PropertyRef Name="in_id" />
+      </Principal>
+      <Dependent Role="ordertables">
+        <PropertyRef Name="o_fk_invoice" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ordertabl__o_fk___3C69FB99">
+    <End Role="sub_category" Type="Self.sub_category" Multiplicity="0..1" />
+    <End Role="ordertables" Type="Self.ordertable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sub_category">
+        <PropertyRef Name="subcat_id" />
+      </Principal>
+      <Dependent Role="ordertables">
+        <PropertyRef Name="o_fk_subcat" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ordertabl__o_fk___3D5E1FD2">
+    <End Role="usertables" Type="Self.usertable" Multiplicity="0..1" />
+    <End Role="ordertables" Type="Self.ordertable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usertables">
+        <PropertyRef Name="u_id" />
+      </Principal>
+      <Dependent Role="ordertables">
+        <PropertyRef Name="o_fk_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__sub_categ__subca__25869641">
+    <End Role="usertables" Type="Self.usertable" Multiplicity="0..1" />
+    <End Role="sub_category" Type="Self.sub_category" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usertables">
+        <PropertyRef Name="u_id" />
+      </Principal>
+      <Dependent Role="sub_category">
+        <PropertyRef Name="subcat_user_id_fk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FluffNStuffEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="admintables" EntityType="Self.admintable" />
+    <EntitySet Name="categories" EntityType="Self.category" />
+    <EntitySet Name="invoicetables" EntityType="Self.invoicetable" />
+    <EntitySet Name="ordertables" EntityType="Self.ordertable" />
+    <EntitySet Name="sub_category" EntityType="Self.sub_category" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="usertables" EntityType="Self.usertable" />
+    <AssociationSet Name="FK__category__admin___0DAF0CB0" Association="Self.FK__category__admin___0DAF0CB0">
+      <End Role="admintables" EntitySet="admintables" />
+      <End Role="categories" EntitySet="categories" />
+    </AssociationSet>
+    <AssociationSet Name="FK__sub_categ__admin__24927208" Association="Self.FK__sub_categ__admin__24927208">
+      <End Role="admintables" EntitySet="admintables" />
+      <End Role="sub_category" EntitySet="sub_category" />
+    </AssociationSet>
+    <AssociationSet Name="FK__sub_categ__cat_i__32E0915F" Association="Self.FK__sub_categ__cat_i__32E0915F">
+      <End Role="categories" EntitySet="categories" />
+      <End Role="sub_category" EntitySet="sub_category" />
+    </AssociationSet>
+    <AssociationSet Name="FK__invoiceta__in_fk__37A5467C" Association="Self.FK__invoiceta__in_fk__37A5467C">
+      <End Role="sub_category" EntitySet="sub_category" />
+      <End Role="invoicetables" EntitySet="invoicetables" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ordertabl__o_fk___3E52440B" Association="Self.FK__ordertabl__o_fk___3E52440B">
+      <End Role="invoicetables" EntitySet="invoicetables" />
+      <End Role="ordertables" EntitySet="ordertables" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ordertabl__o_fk___3C69FB99" Association="Self.FK__ordertabl__o_fk___3C69FB99">
+      <End Role="sub_category" EntitySet="sub_category" />
+      <End Role="ordertables" EntitySet="ordertables" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ordertabl__o_fk___3D5E1FD2" Association="Self.FK__ordertabl__o_fk___3D5E1FD2">
+      <End Role="usertables" EntitySet="usertables" />
+      <End Role="ordertables" EntitySet="ordertables" />
+    </AssociationSet>
+    <AssociationSet Name="FK__sub_categ__subca__25869641" Association="Self.FK__sub_categ__subca__25869641">
+      <End Role="usertables" EntitySet="usertables" />
+      <End Role="sub_category" EntitySet="sub_category" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

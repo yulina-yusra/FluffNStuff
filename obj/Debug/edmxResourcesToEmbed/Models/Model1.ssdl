@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FluffNStuffModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="admintables">
+    <Key>
+      <PropertyRef Name="admin_id" />
+    </Key>
+    <Property Name="admin_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="admin_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="admin_password" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="categories">
+    <Key>
+      <PropertyRef Name="cat_id" />
+    </Key>
+    <Property Name="cat_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cat_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="cat_image" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="admin_id_fk" Type="int" />
+    <Property Name="cat_status" Type="int" />
+  </EntityType>
+  <EntityType Name="invoicetables">
+    <Key>
+      <PropertyRef Name="in_id" />
+    </Key>
+    <Property Name="in_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="in_fk_subcat" Type="int" />
+    <Property Name="in_date" Type="datetime" />
+    <Property Name="in_totalbill" Type="float" />
+  </EntityType>
+  <EntityType Name="ordertables">
+    <Key>
+      <PropertyRef Name="o_id" />
+    </Key>
+    <Property Name="o_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="o_fk_subcat" Type="int" />
+    <Property Name="o_fk_user" Type="int" />
+    <Property Name="o_fk_invoice" Type="int" />
+    <Property Name="o_date" Type="datetime" />
+    <Property Name="o_qty" Type="int" />
+    <Property Name="o_bill" Type="float" />
+    <Property Name="o_unitprice" Type="int" />
+  </EntityType>
+  <EntityType Name="sub_category">
+    <Key>
+      <PropertyRef Name="subcat_id" />
+    </Key>
+    <Property Name="subcat_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="subcat_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="subcat_image" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="subcat_price" Type="int" />
+    <Property Name="subcat_desc" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="admin_id_fk" Type="int" />
+    <Property Name="subcat_user_id_fk" Type="int" />
+    <Property Name="cat_id_fk" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="usertables">
+    <Key>
+      <PropertyRef Name="u_id" />
+    </Key>
+    <Property Name="u_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="u_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="u_password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="u_image" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="u_contact" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="u_email" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__category__admin___0DAF0CB0">
+    <End Role="admintables" Type="Self.admintables" Multiplicity="0..1" />
+    <End Role="categories" Type="Self.categories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="admintables">
+        <PropertyRef Name="admin_id" />
+      </Principal>
+      <Dependent Role="categories">
+        <PropertyRef Name="admin_id_fk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__invoiceta__in_fk__37A5467C">
+    <End Role="sub_category" Type="Self.sub_category" Multiplicity="0..1" />
+    <End Role="invoicetables" Type="Self.invoicetables" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sub_category">
+        <PropertyRef Name="subcat_id" />
+      </Principal>
+      <Dependent Role="invoicetables">
+        <PropertyRef Name="in_fk_subcat" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ordertabl__o_fk___3C69FB99">
+    <End Role="sub_category" Type="Self.sub_category" Multiplicity="0..1" />
+    <End Role="ordertables" Type="Self.ordertables" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sub_category">
+        <PropertyRef Name="subcat_id" />
+      </Principal>
+      <Dependent Role="ordertables">
+        <PropertyRef Name="o_fk_subcat" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ordertabl__o_fk___3D5E1FD2">
+    <End Role="usertables" Type="Self.usertables" Multiplicity="0..1" />
+    <End Role="ordertables" Type="Self.ordertables" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usertables">
+        <PropertyRef Name="u_id" />
+      </Principal>
+      <Dependent Role="ordertables">
+        <PropertyRef Name="o_fk_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ordertabl__o_fk___3E52440B">
+    <End Role="invoicetables" Type="Self.invoicetables" Multiplicity="0..1" />
+    <End Role="ordertables" Type="Self.ordertables" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="invoicetables">
+        <PropertyRef Name="in_id" />
+      </Principal>
+      <Dependent Role="ordertables">
+        <PropertyRef Name="o_fk_invoice" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__sub_categ__admin__24927208">
+    <End Role="admintables" Type="Self.admintables" Multiplicity="0..1" />
+    <End Role="sub_category" Type="Self.sub_category" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="admintables">
+        <PropertyRef Name="admin_id" />
+      </Principal>
+      <Dependent Role="sub_category">
+        <PropertyRef Name="admin_id_fk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__sub_categ__cat_i__32E0915F">
+    <End Role="categories" Type="Self.categories" Multiplicity="0..1" />
+    <End Role="sub_category" Type="Self.sub_category" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="categories">
+        <PropertyRef Name="cat_id" />
+      </Principal>
+      <Dependent Role="sub_category">
+        <PropertyRef Name="cat_id_fk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__sub_categ__subca__25869641">
+    <End Role="usertables" Type="Self.usertables" Multiplicity="0..1" />
+    <End Role="sub_category" Type="Self.sub_category" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usertables">
+        <PropertyRef Name="u_id" />
+      </Principal>
+      <Dependent Role="sub_category">
+        <PropertyRef Name="subcat_user_id_fk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FluffNStuffModelStoreContainer">
+    <EntitySet Name="admintables" EntityType="Self.admintables" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="categories" EntityType="Self.categories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="invoicetables" EntityType="Self.invoicetables" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ordertables" EntityType="Self.ordertables" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sub_category" EntityType="Self.sub_category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="usertables" EntityType="Self.usertables" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__category__admin___0DAF0CB0" Association="Self.FK__category__admin___0DAF0CB0">
+      <End Role="admintables" EntitySet="admintables" />
+      <End Role="categories" EntitySet="categories" />
+    </AssociationSet>
+    <AssociationSet Name="FK__invoiceta__in_fk__37A5467C" Association="Self.FK__invoiceta__in_fk__37A5467C">
+      <End Role="sub_category" EntitySet="sub_category" />
+      <End Role="invoicetables" EntitySet="invoicetables" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ordertabl__o_fk___3C69FB99" Association="Self.FK__ordertabl__o_fk___3C69FB99">
+      <End Role="sub_category" EntitySet="sub_category" />
+      <End Role="ordertables" EntitySet="ordertables" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ordertabl__o_fk___3D5E1FD2" Association="Self.FK__ordertabl__o_fk___3D5E1FD2">
+      <End Role="usertables" EntitySet="usertables" />
+      <End Role="ordertables" EntitySet="ordertables" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ordertabl__o_fk___3E52440B" Association="Self.FK__ordertabl__o_fk___3E52440B">
+      <End Role="invoicetables" EntitySet="invoicetables" />
+      <End Role="ordertables" EntitySet="ordertables" />
+    </AssociationSet>
+    <AssociationSet Name="FK__sub_categ__admin__24927208" Association="Self.FK__sub_categ__admin__24927208">
+      <End Role="admintables" EntitySet="admintables" />
+      <End Role="sub_category" EntitySet="sub_category" />
+    </AssociationSet>
+    <AssociationSet Name="FK__sub_categ__cat_i__32E0915F" Association="Self.FK__sub_categ__cat_i__32E0915F">
+      <End Role="categories" EntitySet="categories" />
+      <End Role="sub_category" EntitySet="sub_category" />
+    </AssociationSet>
+    <AssociationSet Name="FK__sub_categ__subca__25869641" Association="Self.FK__sub_categ__subca__25869641">
+      <End Role="usertables" EntitySet="usertables" />
+      <End Role="sub_category" EntitySet="sub_category" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

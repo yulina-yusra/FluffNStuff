@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FluffNStuffModelStoreContainer" CdmEntityContainer="FluffNStuffEntities">
+    <EntitySetMapping Name="admintables">
+      <EntityTypeMapping TypeName="FluffNStuffModel.admintable">
+        <MappingFragment StoreEntitySet="admintables">
+          <ScalarProperty Name="admin_id" ColumnName="admin_id" />
+          <ScalarProperty Name="admin_name" ColumnName="admin_name" />
+          <ScalarProperty Name="admin_password" ColumnName="admin_password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="categories">
+      <EntityTypeMapping TypeName="FluffNStuffModel.category">
+        <MappingFragment StoreEntitySet="categories">
+          <ScalarProperty Name="cat_id" ColumnName="cat_id" />
+          <ScalarProperty Name="cat_name" ColumnName="cat_name" />
+          <ScalarProperty Name="cat_image" ColumnName="cat_image" />
+          <ScalarProperty Name="admin_id_fk" ColumnName="admin_id_fk" />
+          <ScalarProperty Name="cat_status" ColumnName="cat_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="invoicetables">
+      <EntityTypeMapping TypeName="FluffNStuffModel.invoicetable">
+        <MappingFragment StoreEntitySet="invoicetables">
+          <ScalarProperty Name="in_totalbill" ColumnName="in_totalbill" />
+          <ScalarProperty Name="in_id" ColumnName="in_id" />
+          <ScalarProperty Name="in_fk_subcat" ColumnName="in_fk_subcat" />
+          <ScalarProperty Name="in_date" ColumnName="in_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ordertables">
+      <EntityTypeMapping TypeName="FluffNStuffModel.ordertable">
+        <MappingFragment StoreEntitySet="ordertables">
+          <ScalarProperty Name="o_id" ColumnName="o_id" />
+          <ScalarProperty Name="o_fk_subcat" ColumnName="o_fk_subcat" />
+          <ScalarProperty Name="o_fk_user" ColumnName="o_fk_user" />
+          <ScalarProperty Name="o_fk_invoice" ColumnName="o_fk_invoice" />
+          <ScalarProperty Name="o_date" ColumnName="o_date" />
+          <ScalarProperty Name="o_qty" ColumnName="o_qty" />
+          <ScalarProperty Name="o_bill" ColumnName="o_bill" />
+          <ScalarProperty Name="o_unitprice" ColumnName="o_unitprice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sub_category">
+      <EntityTypeMapping TypeName="FluffNStuffModel.sub_category">
+        <MappingFragment StoreEntitySet="sub_category">
+          <ScalarProperty Name="subcat_id" ColumnName="subcat_id" />
+          <ScalarProperty Name="subcat_name" ColumnName="subcat_name" />
+          <ScalarProperty Name="subcat_image" ColumnName="subcat_image" />
+          <ScalarProperty Name="subcat_price" ColumnName="subcat_price" />
+          <ScalarProperty Name="subcat_desc" ColumnName="subcat_desc" />
+          <ScalarProperty Name="admin_id_fk" ColumnName="admin_id_fk" />
+          <ScalarProperty Name="subcat_user_id_fk" ColumnName="subcat_user_id_fk" />
+          <ScalarProperty Name="cat_id_fk" ColumnName="cat_id_fk" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="FluffNStuffModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="usertables">
+      <EntityTypeMapping TypeName="FluffNStuffModel.usertable">
+        <MappingFragment StoreEntitySet="usertables">
+          <ScalarProperty Name="u_id" ColumnName="u_id" />
+          <ScalarProperty Name="u_name" ColumnName="u_name" />
+          <ScalarProperty Name="u_password" ColumnName="u_password" />
+          <ScalarProperty Name="u_image" ColumnName="u_image" />
+          <ScalarProperty Name="u_contact" ColumnName="u_contact" />
+          <ScalarProperty Name="u_email" ColumnName="u_email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
